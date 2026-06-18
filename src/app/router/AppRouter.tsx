@@ -6,10 +6,10 @@ import {
 
 import Layout from "@/shared/components/Layout";
 
-import Dashboard from "@/pages/Dashboard/Dashboard";
-import History from "@/pages/History/History";
-import Settings from "@/pages/Settings/Settings";
-import NotFound from "@/pages/NotFound/NotFound";
+import Dashboard from "@/pages/Dashboard";
+import History from "@/pages/History";
+import Settings from "@/pages/Settings";
+import NotFound from "@/pages/NotFound";
 
 function AppRouter() {
     return (
