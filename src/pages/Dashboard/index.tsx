@@ -1,13 +1,39 @@
+import { useAppSelector } from "@/shared/hooks/redux";
+
 function Dashboard() {
+    const balances = useAppSelector(
+        (state) => state.wallet.balances
+    );
+
     return (
         <section>
-            <h2 className="mb-4 text-3xl font-bold">
+            <h2 className="mb-8 text-3xl font-bold">
                 Dashboard
             </h2>
 
-            <p className="text-slate-600">
-                Wallet overview will be here.
-            </p>
+            <div className="space-y-4">
+                {Object.entries(balances).map(
+                    ([currency, amount]) => (
+                        <div
+                            key={currency}
+                            className="
+                                rounded-xl
+                                bg-white
+                                p-5
+                                shadow
+                            "
+                        >
+                            <h3 className="text-xl font-semibold">
+                                {currency}
+                            </h3>
+
+                            <p className="mt-2 text-3xl">
+                                {amount}
+                            </p>
+                        </div>
+                    )
+                )}
+            </div>
         </section>
     );
 }
