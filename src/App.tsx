@@ -1,9 +1,11 @@
 function App() {
   return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-100">
-          <h1 className="text-5xl font-bold text-slate-800">
-              Currency Wallet
-          </h1>
+      <main className="min-h-screen bg-slate-100">
+          <div className="mx-auto flex max-w-7xl justify-center py-20">
+              <h1 className="text-5xl font-bold">
+                  Currency Wallet
+              </h1>
+          </div>
       </main>
   );
 }
