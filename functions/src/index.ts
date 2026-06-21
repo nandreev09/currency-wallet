@@ -1,1 +1,1 @@
-export {};
+export { latestRates } from "./functions/latestRates";
