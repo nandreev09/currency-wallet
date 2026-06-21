@@ -1,9 +1,8 @@
 import { useAppSelector } from "@/shared/hooks/redux";
+import { selectHistory } from "@/features/history/model/selectors";
 
 function History() {
-    const transactions = useAppSelector(
-        (state) => state.history.transactions
-    );
+    const transactions = useAppSelector(selectHistory);
 
     return (
         <section>

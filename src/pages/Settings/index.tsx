@@ -1,9 +1,15 @@
 import { useAppSelector } from "@/shared/hooks/redux";
+import { selectTheme, selectBaseCurrency, selectTimeZone } from "@/features/settings/model/selectors";
 
 function Settings() {
-    const settings = useAppSelector(
-        (state) => state.settings
-    );
+    const theme =
+    useAppSelector(selectTheme);
+
+const baseCurrency =
+    useAppSelector(selectBaseCurrency);
+
+const timeZone =
+    useAppSelector(selectTimeZone);
 
     return (
         <section>
@@ -17,7 +23,7 @@ function Settings() {
                         Theme
                     </h3>
 
-                    <p>{settings.theme}</p>
+                    <p>{theme}</p>
                 </div>
 
                 <div className="rounded-xl bg-white p-6 shadow">
@@ -25,7 +31,7 @@ function Settings() {
                         Base Currency
                     </h3>
 
-                    <p>{settings.baseCurrency}</p>
+                    <p>{baseCurrency}</p>
                 </div>
 
                 <div className="rounded-xl bg-white p-6 shadow">
@@ -33,7 +39,7 @@ function Settings() {
                         Time Zone
                     </h3>
 
-                    <p>{settings.timeZone}</p>
+                    <p>{timeZone}</p>
                 </div>
             </div>
         </section>

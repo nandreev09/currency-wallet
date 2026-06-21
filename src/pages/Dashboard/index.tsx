@@ -1,9 +1,9 @@
 import { useAppSelector } from "@/shared/hooks/redux";
+import { selectBalances } from "@/features/wallet/model/selectors";
 
 function Dashboard() {
-    const balances = useAppSelector(
-        (state) => state.wallet.balances
-    );
+    const balances =
+    useAppSelector(selectBalances);
 
     return (
         <section>
