@@ -1,7 +1,8 @@
-export interface WalletBalance {
-    [currency: string]: number;
-}
-
-export interface WalletState {
-    balances: WalletBalance;
-}
+export interface WalletCurrency {
+    code: string;
+    amount: number;
+  }
+  
+  export interface WalletState {
+    currencies: WalletCurrency[];
+  }

@@ -1,46 +1,68 @@
-import  { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import type { WalletState } from "../types";
+import type {
+  WalletCurrency,
+  WalletState,
+} from "../types";
 
 const initialState: WalletState = {
-    balances: {
-        USD: 1000,
-        EUR: 500
-    }
+  currencies: [
+    {
+      code: "USD",
+      amount: 1000,
+    },
+  ],
 };
 
 const walletSlice = createSlice({
-    name: "wallet",
+  name: "wallet",
 
-    initialState,
+  initialState,
 
-    reducers: {
-        addCurrency(
-            state,
-            action: PayloadAction<string>
-        ) {
-            if (!state.balances[action.payload]) {
-                state.balances[action.payload] = 0;
-            }
-        },
+  reducers: {
+    addCurrency(
+      state,
+      action: PayloadAction<WalletCurrency>
+    ) {
+      state.currencies.push(action.payload);
+    },
 
-        updateBalance(
-            state,
-            action: PayloadAction<{
-                currency: string;
-                amount: number;
-            }>
-        ) {
-            state.balances[action.payload.currency] =
-                action.payload.amount;
-        }
-    }
+    removeCurrency(
+      state,
+      action: PayloadAction<string>
+    ) {
+      state.currencies = state.currencies.filter(
+        (currency) => currency.code !== action.payload
+      );
+    },
+
+    updateBalance(
+      state,
+      action: PayloadAction<{
+        code: string;
+        amount: number;
+      }>
+    ) {
+      const currency = state.currencies.find(
+        (item) => item.code === action.payload.code
+      );
+
+      if (currency) {
+        currency.amount = action.payload.amount;
+      }
+    },
+
+    resetWallet(state) {
+      state.currencies = initialState.currencies;
+    },
+  },
 });
 
 export const {
-    addCurrency,
-    updateBalance
+  addCurrency,
+  removeCurrency,
+  updateBalance,
+  resetWallet,
 } = walletSlice.actions;
 
 export default walletSlice.reducer;
