@@ -1,52 +1,41 @@
-import { selectBaseCurrency } from "@/features/settings/model/selectors";
-import { useAppSelector } from "@/shared/hooks/redux";
+import { useLatestRates } from "@/services/exchange";
 
+const Dashboard = () => {
+  const { data, isLoading, isError } = useLatestRates("USD");
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
-function Dashboard() {
-    const baseCurrency =
-        useAppSelector(selectBaseCurrency);
+  if (isError) {
+    return <p>Error loading exchange rates.</p>;
+  }
 
-    const {
-        data,
-        isLoading,
-        isError
-    } = useLatestRates(baseCurrency);
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">
+        Dashboard
+      </h1>
 
-    if (isLoading) {
-        return (
-            <p className="text-xl">
-                Loading exchange rates...
-            </p>
-        );
-    }
+      <p>
+        Base currency: <strong>{data?.base}</strong>
+      </p>
 
-    if (isError) {
-        return (
-            <p className="text-xl text-red-600">
-                Failed to load exchange rates.
-            </p>
-        );
-    }
-
-    return (
-        <section>
-            <h2 className="mb-8 text-3xl font-bold">
-                Dashboard
-            </h2>
-
-            <div className="rounded-xl bg-white p-6 shadow">
-                <p className="mb-4">
-                    Base currency:
-                    <strong> {baseCurrency}</strong>
-                </p>
-
-                <pre className="overflow-auto rounded bg-slate-100 p-4 text-sm">
-                    {JSON.stringify(data, null, 2)}
-                </pre>
+      <div className="mt-6">
+        {Object.entries(data?.rates ?? {})
+          .slice(0, 10)
+          .map(([currency, rate]) => (
+            <div
+              key={currency}
+              className="flex justify-between border-b py-2"
+            >
+              <span>{currency}</span>
+              <span>{rate}</span>
             </div>
-        </section>
-    );
-}
+          ))}
+      </div>
+    </div>
+  );
+};
 
 export default Dashboard;
