@@ -1,9 +1,33 @@
+import { selectBaseCurrency } from "@/features/settings/model/selectors";
 import { useAppSelector } from "@/shared/hooks/redux";
-import { selectBalances } from "@/features/wallet/model/selectors";
+
+
 
 function Dashboard() {
-    const balances =
-    useAppSelector(selectBalances);
+    const baseCurrency =
+        useAppSelector(selectBaseCurrency);
+
+    const {
+        data,
+        isLoading,
+        isError
+    } = useLatestRates(baseCurrency);
+
+    if (isLoading) {
+        return (
+            <p className="text-xl">
+                Loading exchange rates...
+            </p>
+        );
+    }
+
+    if (isError) {
+        return (
+            <p className="text-xl text-red-600">
+                Failed to load exchange rates.
+            </p>
+        );
+    }
 
     return (
         <section>
@@ -11,28 +35,15 @@ function Dashboard() {
                 Dashboard
             </h2>
 
-            <div className="space-y-4">
-                {Object.entries(balances).map(
-                    ([currency, amount]) => (
-                        <div
-                            key={currency}
-                            className="
-                                rounded-xl
-                                bg-white
-                                p-5
-                                shadow
-                            "
-                        >
-                            <h3 className="text-xl font-semibold">
-                                {currency}
-                            </h3>
+            <div className="rounded-xl bg-white p-6 shadow">
+                <p className="mb-4">
+                    Base currency:
+                    <strong> {baseCurrency}</strong>
+                </p>
 
-                            <p className="mt-2 text-3xl">
-                                {amount}
-                            </p>
-                        </div>
-                    )
-                )}
+                <pre className="overflow-auto rounded bg-slate-100 p-4 text-sm">
+                    {JSON.stringify(data, null, 2)}
+                </pre>
             </div>
         </section>
     );
