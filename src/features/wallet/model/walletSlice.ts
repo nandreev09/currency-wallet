@@ -1,17 +1,22 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { loadWallet } from "@/shared/lib/storage";
 
 import type {
   WalletCurrency,
   WalletState,
 } from "../types";
 
+const savedWallet = loadWallet();
+
 const initialState: WalletState = {
-  currencies: [
-    {
-      code: "USD",
-      amount: 1000,
-    },
-  ],
+    currencies: savedWallet.length
+        ? savedWallet
+        : [
+              {
+                  code: "USD",
+                  amount: 1000,
+              },
+          ],
 };
 
 const walletSlice = createSlice({
@@ -20,11 +25,16 @@ const walletSlice = createSlice({
   initialState,
 
   reducers: {
-    addCurrency(
-      state,
-      action: PayloadAction<WalletCurrency>
-    ) {
-      state.currencies.push(action.payload);
+    addCurrency(state, action: PayloadAction<WalletCurrency>) {
+        const exists = state.currencies.some(
+            (currency) => currency.code === action.payload.code
+        );
+    
+        if (exists) {
+            return;
+        }
+    
+        state.currencies.push(action.payload);
     },
 
     removeCurrency(

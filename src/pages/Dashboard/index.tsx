@@ -1,9 +1,9 @@
 import { useLatestRates } from "@/services/exchange";
+import { WalletList } from "@/features/wallet/ui";
 
 import {
     BaseCurrency,
-    ExchangeRates,
-    WalletSection,
+    ExchangeRates
 } from "./components";
 
 const Dashboard = () => {
@@ -23,7 +23,7 @@ const Dashboard = () => {
 
             <ExchangeRates rates={data.rates} />
 
-            <WalletSection />
+            <WalletList />
         </main>
     );
 };
