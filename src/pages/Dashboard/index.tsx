@@ -27,6 +27,7 @@ const Dashboard = () => {
             <WalletList />
 
             <ConverterForm />
+
         </main>
     );
 };

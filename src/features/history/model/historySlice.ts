@@ -3,8 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 import type { HistoryState, Transaction } from "../types";
 
+import { loadHistory } from "@/shared/lib/storage";
+
+const savedHistory = loadHistory();
+
 const initialState: HistoryState = {
-    transactions: []
+    transactions: savedHistory,
 };
 
 const historySlice = createSlice({

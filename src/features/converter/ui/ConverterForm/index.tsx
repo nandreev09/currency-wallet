@@ -10,6 +10,7 @@ import { convertCurrency } from "@/shared/lib/currency";
 import { useAppDispatch } from "@/shared/hooks/redux";
 
 import { updateWalletBalances } from "@/features/wallet/model/walletSlice";
+import { addTransaction } from "@/features/history/model/historySlice";
 
 
 
@@ -79,6 +80,19 @@ const ConverterForm = () => {
                         amount: toCurrency.amount + convertedAmount,
                     },
                 ],
+            })
+        );
+
+        dispatch(
+            addTransaction({
+                id: crypto.randomUUID(),
+                from,
+                to,
+                fromAmount: amountNumber,
+                toAmount: convertedAmount,
+                rate: convertedAmount / amountNumber,
+                createdAt: new Date().toISOString(),
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             })
         );
         
