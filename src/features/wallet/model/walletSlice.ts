@@ -8,6 +8,17 @@ import type {
 
 const savedWallet = loadWallet();
 
+
+interface WalletBalanceUpdate {
+    code: string;
+    amount: number;
+}
+
+interface UpdateWalletBalancesPayload {
+    updates: WalletBalanceUpdate[];
+}
+
+
 const initialState: WalletState = {
     currencies: savedWallet.length
         ? savedWallet
@@ -46,24 +57,24 @@ const walletSlice = createSlice({
       );
     },
 
-    updateBalance(
-      state,
-      action: PayloadAction<{
-        code: string;
-        amount: number;
-      }>
-    ) {
-      const currency = state.currencies.find(
-        (item) => item.code === action.payload.code
-      );
-
-      if (currency) {
-        currency.amount = action.payload.amount;
-      }
-    },
 
     resetWallet(state) {
       state.currencies = initialState.currencies;
+    },
+
+    updateWalletBalances(
+        state,
+        action: PayloadAction<UpdateWalletBalancesPayload>
+    ) {
+        action.payload.updates.forEach((update) => {
+            const currency = state.currencies.find(
+                (item) => item.code === update.code
+            );
+    
+            if (currency) {
+                currency.amount = update.amount;
+            }
+        });
     },
   },
 });
@@ -71,8 +82,8 @@ const walletSlice = createSlice({
 export const {
   addCurrency,
   removeCurrency,
-  updateBalance,
   resetWallet,
+  updateWalletBalances,
 } = walletSlice.actions;
 
 export default walletSlice.reducer;

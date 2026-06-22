@@ -1,5 +1,6 @@
 import { useLatestRates } from "@/services/exchange";
 import { WalletList } from "@/features/wallet/ui";
+import { ConverterForm } from "@/features/converter/ui";
 
 import {
     BaseCurrency,
@@ -24,6 +25,8 @@ const Dashboard = () => {
             <ExchangeRates rates={data.rates} />
 
             <WalletList />
+
+            <ConverterForm />
         </main>
     );
 };
