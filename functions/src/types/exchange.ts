@@ -1,8 +1,8 @@
 export interface ApiLatestRatesResponse {
-    success: boolean;
-    source: string;
-    timestamp: number;
-    quotes: Record<string, number>;
+    amount: number;
+    base: string;
+    date: string;
+    rates: Record<string, number>;
 }
 
 export interface LatestRatesResponse {

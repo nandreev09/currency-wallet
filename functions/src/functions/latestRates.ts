@@ -1,6 +1,5 @@
 import { onRequest } from "firebase-functions/v2/https";
-import { fetchLatestRates } from "../services/exchange.service";
-console.log("API KEY:", process.env.EXCHANGE_API_KEY);
+import { fetchLatestRates } from "../services/latestRates.service";
 
 export const latestRates = onRequest(async (req, res) => {
   try {

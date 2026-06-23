@@ -1,14 +1,14 @@
 import { useLatestRates } from "@/services/exchange";
 import { WalletList } from "@/features/wallet/ui";
 import { ConverterForm } from "@/features/converter/ui";
+import { useAppSelector } from "@/shared/hooks/redux";
+import { selectBaseCurrency } from "@/features/settings/model/selectors";
 
-import {
-    BaseCurrency,
-    ExchangeRates
-} from "./components";
+import { BaseCurrency, ExchangeRates } from "./components";
 
 const Dashboard = () => {
-    const { data, isLoading, isError } = useLatestRates("USD");
+    const baseCurrency = useAppSelector(selectBaseCurrency);
+    const { data, isLoading, isError } = useLatestRates(baseCurrency);
 
     if (isLoading) {
         return <p>Loading...</p>;
@@ -27,7 +27,6 @@ const Dashboard = () => {
             <WalletList />
 
             <ConverterForm />
-
         </main>
     );
 };

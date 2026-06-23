@@ -2,12 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import { rootReducer } from "./rootReducer";
 
-import { saveWallet } from "@/shared/lib/storage";
-
-import { saveHistory } from "@/shared/lib/storage";
+import { saveSettings, saveWallet, saveHistory } from "@/shared/lib/storage";
 
 export const store = configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer
 });
 
 store.subscribe(() => {
@@ -15,6 +13,7 @@ store.subscribe(() => {
 
     saveWallet(state.wallet.currencies);
     saveHistory(state.history.transactions);
+    saveSettings(state.settings);
 });
 
 export type RootState = ReturnType<typeof store.getState>;
