@@ -1,13 +1,14 @@
 import { useAppSelector, useAppDispatch } from "@/shared/hooks/redux";
-import type { ChangeEvent } from "react";
+import { useEffect, type ChangeEvent } from "react";
 import {
     selectTheme,
     selectBaseCurrency,
     selectTimeZone
 } from "@/features/settings/model/selectors";
+import type { Theme } from "@/features/settings/types";
 import { clearHistory } from "@/features/history/model/historySlice";
 import { resetWallet } from "@/features/wallet/model/walletSlice";
-import { setBaseCurrency } from "@/features/settings/model/settingsSlice";
+import { setBaseCurrency, setTheme } from "@/features/settings/model/settingsSlice";
 import { CURRENCY_INFO } from "@/shared/constants/currencies";
 
 function Settings() {
@@ -18,6 +19,18 @@ function Settings() {
     const baseCurrency = useAppSelector(selectBaseCurrency);
 
     const timeZone = useAppSelector(selectTimeZone);
+
+    useEffect(() => {
+        document.documentElement.classList.toggle("dark", theme === "dark");
+    }, [theme]);
+
+    const handleThemeChange = (
+        event: ChangeEvent<HTMLSelectElement>
+    ) => {
+        dispatch(
+            setTheme(event.target.value as Theme)
+        );
+    };
 
     const handleClearHistory = () => {
         const confirmed = window.confirm(
@@ -57,7 +70,15 @@ function Settings() {
                 <div className="rounded-xl bg-white p-6 shadow">
                     <h3 className="font-semibold">Theme</h3>
 
-                    <p>{theme}</p>
+                    <select
+                        value={theme}
+                        onChange={handleThemeChange}
+                        className="mt-2 w-full rounded-md border p-2"
+                    >
+                        <option value="light">Light</option>
+
+                        <option value="dark">Dark</option>
+                    </select>
                 </div>
 
                 <div className="rounded-xl bg-white p-6 shadow">
