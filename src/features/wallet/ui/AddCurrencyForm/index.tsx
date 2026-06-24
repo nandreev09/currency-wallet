@@ -68,13 +68,13 @@ const AddCurrencyForm = ({
     }
 
     return (
-        <div className="flex items-center gap-4 rounded-lg border p-4">
+        <div className="flex items-center gap-4 rounded-lg border p-6 dark:border-gray-700 dark:bg-slate-800">
             <select
                 value={currentCurrency}
                 onChange={(event) =>
                     setSelectedCurrency(event.target.value)
                 }
-                className="rounded-md border px-3 py-2"
+                className="rounded-md border px-3 py-2 dark:text-gray-300"
             >
                 {availableCurrencies.map((currency) => (
                     <option

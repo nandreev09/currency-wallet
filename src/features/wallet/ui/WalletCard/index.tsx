@@ -8,9 +8,7 @@ interface WalletCardProps {
     currency: WalletCurrency;
 }
 
-const WalletCard = ({
-    currency,
-}: WalletCardProps) => {
+const WalletCard = ({ currency }: WalletCardProps) => {
     const dispatch = useAppDispatch();
 
     const handleRemove = () => {
@@ -18,14 +16,14 @@ const WalletCard = ({
     };
 
     return (
-        <div className="rounded-lg border bg-white p-4 shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-colors dark:border-gray-700 dark:bg-slate-800">
             <div className="mb-4 flex items-start justify-between">
                 <div>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                         Currency
                     </p>
 
-                    <h3 className="mt-1 text-2xl font-bold">
+                    <h3 className="mt-1 text-2xl font-bold text-gray-600 dark:text-gray-300">
                         {currency.code}
                     </h3>
                 </div>
@@ -33,24 +31,15 @@ const WalletCard = ({
                 <button
                     type="button"
                     onClick={handleRemove}
-                    className="
-                        rounded
-                        px-2
-                        py-1
-                        text-red-600
-                        transition-colors
-                        hover:bg-red-50
-                    "
+                    className="rounded px-2 py-1 text-red-600 transition-colors hover:bg-red-50 dark:hover:bg-red-950"
                 >
                     ✕
                 </button>
             </div>
 
-            <p className="text-sm text-gray-500">
-                Balance
-            </p>
+            <p className="text-sm text-gray-500 dark:text-white">Balance</p>
 
-            <p className="mt-1 text-xl font-semibold">
+            <p className="mt-1 text-xl font-semibold text-gray-600 dark:text-gray-300">
                 {currency.amount.toFixed(2)}
             </p>
         </div>

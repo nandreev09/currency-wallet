@@ -12,8 +12,6 @@ import { useAppDispatch } from "@/shared/hooks/redux";
 import { updateWalletBalances } from "@/features/wallet/model/walletSlice";
 import { addTransaction } from "@/features/history/model/historySlice";
 
-
-
 const ConverterForm = () => {
     const wallet = useAppSelector(selectWallet);
     const dispatch = useAppDispatch();
@@ -23,63 +21,56 @@ const ConverterForm = () => {
     const [amount, setAmount] = useState("");
 
     const isConvertDisabled =
-    !from ||
-    !to ||
-    from === to ||
-    Number(amount) <= 0;
+        !from || !to || from === to || Number(amount) <= 0;
 
     const handleConvert = () => {
         if (!data) {
             return;
         }
-    
+
         const amountNumber = Number(amount);
 
         if (from === to) {
             return;
         }
-    
+
         if (!from || !to || amountNumber <= 0) {
             return;
         }
-    
-        const fromCurrency = wallet.find(
-            (currency) => currency.code === from
-        );
-    
-        const toCurrency = wallet.find(
-            (currency) => currency.code === to
-        );
-    
+
+        const fromCurrency = wallet.find((currency) => currency.code === from);
+
+        const toCurrency = wallet.find((currency) => currency.code === to);
+
         if (!fromCurrency || !toCurrency) {
             return;
         }
-    
+
         if (fromCurrency.amount < amountNumber) {
             alert("Insufficient funds");
-    
+
             return;
         }
-    
+
         const convertedAmount = convertCurrency({
             amount: amountNumber,
             from,
             to,
-            rates: data.rates,
+            rates: data.rates
         });
-        
+
         dispatch(
             updateWalletBalances({
                 updates: [
                     {
                         code: from,
-                        amount: fromCurrency.amount - amountNumber,
+                        amount: fromCurrency.amount - amountNumber
                     },
                     {
                         code: to,
-                        amount: toCurrency.amount + convertedAmount,
-                    },
-                ],
+                        amount: toCurrency.amount + convertedAmount
+                    }
+                ]
             })
         );
 
@@ -92,41 +83,36 @@ const ConverterForm = () => {
                 toAmount: convertedAmount,
                 rate: convertedAmount / amountNumber,
                 createdAt: new Date().toISOString(),
-                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
             })
         );
-        
+
         setFrom("");
         setTo("");
         setAmount("");
     };
 
     return (
-        <section className="rounded-lg border bg-white p-6 shadow-sm">
-            <h2 className="mb-6 text-2xl font-bold">
+        <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-colors dark:border-gray-700 dark:bg-slate-800">
+            <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
                 Currency Converter
             </h2>
 
             <div className="space-y-4">
                 <div>
-                    <label className="mb-2 block font-medium">
+                    <label className="mb-2 block font-medium text-gray-700 dark:text-gray-300">
                         From
                     </label>
 
                     <select
                         value={from}
                         onChange={(event) => setFrom(event.target.value)}
-                        className="w-full rounded-md border p-2"
+                        className="w-full rounded-md border border-gray-300 bg-white p-2 dark:border-gray-600 dark:bg-slate-700 dark:text-white"
                     >
-                        <option value="">
-                            Select currency
-                        </option>
+                        <option value="">Select currency</option>
 
                         {wallet.map((currency) => (
-                            <option
-                                key={currency.code}
-                                value={currency.code}
-                            >
+                            <option key={currency.code} value={currency.code}>
                                 {currency.code}
                             </option>
                         ))}
@@ -134,24 +120,19 @@ const ConverterForm = () => {
                 </div>
 
                 <div>
-                    <label className="mb-2 block font-medium">
+                    <label className="mb-2 block font-medium text-gray-700 dark:text-gray-300">
                         To
                     </label>
 
                     <select
                         value={to}
                         onChange={(event) => setTo(event.target.value)}
-                        className="w-full rounded-md border p-2"
+                        className="w-full rounded-md border border-gray-300 bg-white p-2 dark:border-gray-600 dark:bg-slate-700 dark:text-white"
                     >
-                        <option value="">
-                            Select currency
-                        </option>
+                        <option value="">Select currency</option>
 
                         {wallet.map((currency) => (
-                            <option
-                                key={currency.code}
-                                value={currency.code}
-                            >
+                            <option key={currency.code} value={currency.code}>
                                 {currency.code}
                             </option>
                         ))}
@@ -159,7 +140,7 @@ const ConverterForm = () => {
                 </div>
 
                 <div>
-                    <label className="mb-2 block font-medium">
+                    <label className="mb-2 block font-medium text-gray-700 dark:text-gray-300">
                         Amount
                     </label>
 
@@ -168,11 +149,9 @@ const ConverterForm = () => {
                         min="0"
                         step="0.01"
                         value={amount}
-                        onChange={(event) =>
-                            setAmount(event.target.value)
-                        }
+                        onChange={(event) => setAmount(event.target.value)}
                         placeholder="Enter amount"
-                        className="w-full rounded-md border p-2"
+                        className="w-full rounded-md border border-gray-300 bg-white p-2 dark:border-gray-600 dark:bg-slate-700 dark:text-white"
                     />
                 </div>
 
@@ -180,17 +159,7 @@ const ConverterForm = () => {
                     type="button"
                     onClick={handleConvert}
                     disabled={isConvertDisabled}
-                    className="
-                        rounded-md
-                        bg-blue-600
-                        px-4
-                        py-2
-                        text-white
-                        transition-colors
-                        hover:bg-blue-700
-                        disabled:cursor-not-allowed
-                        disabled:bg-gray-400
-                    "
+                    className="rounded-md bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400 dark:disabled:bg-gray-700"
                 >
                     Convert
                 </button>

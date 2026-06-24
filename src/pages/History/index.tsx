@@ -20,23 +20,23 @@ function History() {
                         return (
                             <div
                                 key={transaction.id}
-                                className="rounded-xl bg-white p-5 shadow"
+                                className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-colors dark:border-gray-700 dark:bg-slate-800"
                             >
-                                <p>
+                                <p className="text-gray-500 dark:text-gray-400">
                                     {transaction.from} → {transaction.to}
                                 </p>
 
-                                <p className="mt-2">
+                                <p className="mt-2 text-gray-500 dark:text-gray-400">
                                     <strong>
                                         {transaction.fromAmount.toFixed(2)} {transaction.from}
                                     </strong>
                                 </p>
 
-                                <p>
+                                <p className="mt-2 text-gray-500 dark:text-gray-400">
                                     ↓
                                 </p>
 
-                                <p>
+                                <p className="mt-2 text-gray-500 dark:text-gray-400">
                                     <strong>
                                         {transaction.toAmount.toFixed(2)} {transaction.to}
                                     </strong>

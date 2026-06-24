@@ -9,9 +9,9 @@ const ExchangeRateItem = ({
 }: ExchangeRateItemProps) => {
     return (
         <div className="flex justify-between border-b py-2">
-            <span>{currency}</span>
+            <span className="text-gray-600 dark:text-gray-300">{currency}</span>
 
-            <span>{rate}</span>
+            <span className="text-gray-600 dark:text-gray-300">{rate}</span>
         </div>
     );
 };
