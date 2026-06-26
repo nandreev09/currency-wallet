@@ -4,16 +4,12 @@ import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-    plugins: [
-        react(),
-        tailwindcss(),
-        tsconfigPaths()
-    ],
+    plugins: [react(), tailwindcss(), tsconfigPaths()],
 
     server: {
         proxy: {
             "/api": {
-                target: "https://api.exchangerate.host",
+                target: "https://api.frankfurter.app",
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, "")
             }
