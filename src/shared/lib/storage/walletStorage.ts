@@ -1,12 +1,8 @@
 import type { WalletCurrency } from "@/features/wallet/types";
-
-
-
-const WALLET_KEY = "wallet";
-
+import { STORAGE_KEYS } from "@/shared/constants/storage";
 
 export const loadWallet = (): WalletCurrency[] => {
-    const data = localStorage.getItem(WALLET_KEY);
+    const data = localStorage.getItem(STORAGE_KEYS.WALLET);
 
     if (!data) {
         return [];
@@ -20,11 +16,9 @@ export const loadWallet = (): WalletCurrency[] => {
 };
 
 export const saveWallet = (wallet: WalletCurrency[]): void => {
-    localStorage.setItem(WALLET_KEY, JSON.stringify(wallet));
+    localStorage.setItem(STORAGE_KEYS.WALLET, JSON.stringify(wallet));
 };
 
 export const clearWallet = (): void => {
-    localStorage.removeItem(WALLET_KEY);
+    localStorage.removeItem(STORAGE_KEYS.WALLET);
 };
-
-

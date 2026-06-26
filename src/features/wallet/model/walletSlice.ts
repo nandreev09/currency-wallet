@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { loadWallet } from "@/shared/lib/storage";
+import { INITIAL_BALANCE } from "@/shared/constants/wallet";
 
 import type {
   WalletCurrency,
@@ -25,7 +26,7 @@ const initialState: WalletState = {
         : [
               {
                   code: "USD",
-                  amount: 1000,
+                  amount: INITIAL_BALANCE,
               },
           ],
 };

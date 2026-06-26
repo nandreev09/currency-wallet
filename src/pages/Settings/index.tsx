@@ -95,7 +95,7 @@ function Settings() {
                         {Object.entries(CURRENCY_INFO).map(
                             ([code, currency]) => (
                                 <option key={code} value={code}>
-                                    {currency.name} ({code})
+                                    {currency.name} {currency.symbol} ({code})
                                 </option>
                             )
                         )}

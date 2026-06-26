@@ -1,13 +1,12 @@
 import type { Transaction } from "@/features/history/types";
-const HISTORY_KEY = "history";
-
+import { STORAGE_KEYS } from "@/shared/constants/storage";
 
 export const saveHistory = (history: Transaction[]) => {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(history));
 };
 
 export const loadHistory = (): Transaction[] => {
-    const data = localStorage.getItem(HISTORY_KEY);
+    const data = localStorage.getItem(STORAGE_KEYS.HISTORY);
 
     return data ? JSON.parse(data) : [];
 };
