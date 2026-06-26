@@ -1,75 +1,143 @@
-# React + TypeScript + Vite
+# 💱 Currency Wallet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Currency Wallet — это веб-приложение для управления виртуальным валютным кошельком и конвертации денежных средств с использованием актуальных курсов валют, получаемых через Frankfurter API.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Основные возможности
 
-## React Compiler
+- Конвертация валют по актуальным курсам.
+- Управление виртуальным валютным кошельком.
+- Добавление и удаление валют.
+- Просмотр истории операций.
+- Сохранение данных пользователя между сессиями.
+- Настройка параметров приложения.
+- Обработка ошибок при работе с API.
+- Юнит-тестирование ключевых модулей приложения.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+---
 
-Note: This will impact Vite dev & build performances.
+## Используемые технологии
 
-## Expanding the ESLint configuration
+### Frontend
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React
+- TypeScript
+- Redux Toolkit
+- React Redux
+- React Query (@tanstack/react-query)
+- React Router
+- Axios
+- Tailwind CSS
+- Vite
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Backend
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Firebase Functions
+- Node.js
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### API
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Frankfurter API
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Тестирование
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Vitest
+
+---
+
+## Архитектура проекта
+
+Проект состоит из клиентской и серверной частей.
+
+Клиентское приложение разработано с использованием React и TypeScript. Оно отвечает за отображение интерфейса, управление состоянием приложения и взаимодействие с пользователем.
+
+Для обращения к внешнему API используются Firebase Functions. Серверная функция принимает запрос от клиента, обращается к Frankfurter API за актуальными курсами валют и возвращает данные обратно в приложение. Такой подход позволяет изолировать работу с внешним сервисом и разделить ответственность между клиентской и серверной частью.
+
+┌────────────────────┐
+│ React + TypeScript │
+└──────────┬─────────┘
+           │ HTTP
+           ▼
+┌────────────────────┐
+│ Firebase Functions │
+└──────────┬─────────┘
+           │
+           ▼
+┌────────────────────┐
+│ Frankfurter API    │
+└────────────────────┘
+
+---
+
+### Назначение основных директорий
+
+- **app** — настройка приложения, Redux Store, маршрутизация и провайдеры.
+- **features** — функциональные модули приложения.
+- **pages** — страницы приложения.
+- **services** — работа с внешним API.
+- **shared** — переиспользуемые компоненты, утилиты, константы и хуки.
+- **tests** — юнит-тесты.
+
+---
+
+## Использование Redux Toolkit
+
+Redux Toolkit применяется для хранения клиентского состояния приложения:
+
+- валютный кошелёк;
+- история операций;
+- пользовательские настройки.
+
+---
+
+## Использование React Query
+
+React Query используется для работы с серверными данными.
+
+Библиотека отвечает за:
+
+- выполнение запросов;
+- кэширование результатов;
+- обновление данных;
+- обработку состояний загрузки и ошибок.
+
+Это позволяет не хранить курсы валют в Redux и разделить клиентское и серверное состояние приложения.
+
+---
+
+## Локальное хранение данных
+
+Для сохранения пользовательских данных используется Local Storage.
+
+После перезапуска приложения сохраняются:
+
+- валютный кошелёк;
+- история операций;
+- пользовательские настройки.
+
+---
+
+## Установка и запуск
+
+1. Установить зависимости
+   npm install
+   cd functions
+   npm install
+
+2. Запустить Firebase Functions
+   cd functions
+   npm run serve
+
+3. Запустить клиент
+   npm run dev
+
+---
+
+## Запуск тестов
+
+npm run test
+
+## Автор
+
+[nandreev09](https://github.com/nandreev09)
